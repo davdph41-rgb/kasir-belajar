@@ -73,25 +73,26 @@ showCart();
 });
 
 async function testBackend(){
-backendResult.textContent="Mengirim data...";
+  if(!cart.length){
+    backendResult.textContent="Keranjang masih kosong.";
+    return;
+  }
 
-try{
-const response=await fetch("/api/order",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-product:"Coffee",
-price:15000,
-qty:2
-})
-});
+  backendResult.textContent="Mengirim keranjang...";
 
-const data=await response.json();
-backendResult.textContent=JSON.stringify(data,null,2);
-}catch(error){
-backendResult.textContent="Gagal terhubung ke backend.";
-console.error(error);
-}
+  try{
+    const response=await fetch("/api/order",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({cart})
+    });
+
+    const data=await response.json();
+    backendResult.textContent=JSON.stringify(data,null,2);
+  }catch(error){
+    backendResult.textContent="Gagal terhubung ke backend.";
+    console.error(error);
+  }
 }
 
 document.getElementById("testBackend").addEventListener("click",testBackend);
