@@ -1,43 +1,50 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Kasir Belajar</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kasir Belajar</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="app">
-    <h1>Kasir Belajar v2</h1>
-    <p class="intro">Project sederhana untuk belajar alur kasir sebelum memakai GitHub, Vercel, dan Midtrans.</p>
+<main class="app">
+<h1>Kasir Belajar v3</h1>
+<p class="intro">Latihan kasir + komunikasi frontend dan backend.</p>
 
-    <section class="products">
-      <h2>Produk</h2>
-      <div id="productList"></div>
-    </section>
+<section class="products">
+<h2>Produk</h2>
+<div id="productList"></div>
+</section>
 
-    <section class="cart">
-      <h2>Keranjang</h2>
-      <div id="cartList"><p class="empty">Belum ada produk.</p></div>
+<section class="cart">
+<h2>Keranjang</h2>
+<div id="cartList"><p class="empty">Belum ada produk.</p></div>
 
-      <div class="summary">
-        <div>Total <strong id="total">Rp0</strong></div>
-        <label>Uang Bayar
-          <input id="payment" type="number" min="0" placeholder="Contoh: 50000">
-        </label>
-        <div>Kembalian <strong id="change">Rp0</strong></div>
-        <button id="payBtn">Bayar</button>
-      </div>
-    </section>
+<div class="summary">
+<div>Total <strong id="total">Rp0</strong></div>
+<label>Uang Bayar
+<input id="payment" type="number" min="0" placeholder="Contoh: 50000">
+</label>
+<div>Kembalian <strong id="change">Rp0</strong></div>
+<button id="payBtn">Bayar</button>
+</div>
+</section>
 
-    <section class="info">
-      <h2>Catatan Belajar</h2>
-      <p><b>HTML</b> membuat struktur halaman.</p>
-      <p><b>CSS</b> mengatur tampilan.</p>
-      <p><b>JavaScript</b> mengatur produk, keranjang, total, dan pembayaran simulasi.</p>
-      <p>Belum ada pembayaran sungguhan. Midtrans akan dipelajari setelah dasar ini selesai.</p>
-    </section>
-  </main>
-  <script src="script.js"></script>
+<section class="info">
+<h2>Test Backend</h2>
+<p>Tekan tombol di bawah untuk mengirim contoh transaksi ke <code>/api/order</code>.</p>
+<button id="testBackend">Test Backend</button>
+<pre id="backendResult">Belum ada hasil.</pre>
+</section>
+
+<section class="info">
+<h2>Catatan Belajar</h2>
+<p><b>HTML</b> = struktur halaman.</p>
+<p><b>CSS</b> = tampilan.</p>
+<p><b>JavaScript</b> = logika kasir.</p>
+<p><b>Backend</b> = menerima dan memproses data dari website.</p>
+</section>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
