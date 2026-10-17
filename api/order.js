@@ -1,20 +1,23 @@
-export default function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method tidak diizinkan" });
-  }
+export default function handler(req,res){
+  if(req.method!=="POST")return res.status(405).json({message:"Method tidak diizinkan"});
 
-  const { product, price, qty } = req.body;
+  const {cart}=req.body;
 
-  if (!product || !price || !qty) {
-    return res.status(400).json({ message: "Data belum lengkap" });
-  }
+  if(!Array.isArray(cart)||!cart.length)
+    return res.status(400).json({message:"Keranjang kosong"});
 
-  const total = Number(price) * Number(qty);
+  const items=cart.map(item=>({
+    product:item.name,
+    qty:Number(item.qty),
+    price:Number(item.price),
+    subtotal:Number(item.price)*Number(item.qty)
+  }));
+
+  const total=items.reduce((sum,item)=>sum+item.subtotal,0);
 
   res.status(200).json({
-    status: "success",
-    product,
-    qty,
+    status:"success",
+    items,
     total
   });
 }
