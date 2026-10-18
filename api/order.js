@@ -1,5 +1,6 @@
 export default function handler(req,res){
-  if(req.method!=="POST")return res.status(405).json({message:"Method tidak diizinkan"});
+  if(req.method!=="POST")
+    return res.status(405).json({message:"Method tidak diizinkan"});
 
   const {cart}=req.body;
 
@@ -15,8 +16,11 @@ export default function handler(req,res){
 
   const total=items.reduce((sum,item)=>sum+item.subtotal,0);
 
+  const orderId=`ORDER-${Date.now()}`;
+
   res.status(200).json({
     status:"success",
+    order_id:orderId,
     items,
     total
   });
