@@ -44,21 +44,22 @@ export default async function handler(req,res){
     if(!response.ok)
       return res.status(response.status).json({
         status:"error",
-        message:data.error_messages||"Gagal membuat Snap Token"
+        message:"Gagal membuat transaksi Midtrans",
+        detail:data
       });
 
     res.status(200).json({
       status:"success",
       order_id:orderId,
       total,
-      token:data.token,
-      redirect_url:data.redirect_url
+      snap_token:data.token
     });
 
   }catch(error){
+    console.error(error);
     res.status(500).json({
       status:"error",
-      message:"Gagal terhubung ke Midtrans"
+      message:"Terjadi kesalahan server"
     });
   }
 }
