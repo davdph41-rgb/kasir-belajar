@@ -59,17 +59,51 @@ changeEl.textContent=rupiah(Math.max(0,payment-total));
 
 paymentEl.addEventListener("input",updateChange);
 
-document.getElementById("payBtn").addEventListener("click",()=>{
-const total=cart.reduce((sum,p)=>sum+p.price*p.qty,0);
-const payment=Number(paymentEl.value)||0;
+document.getElementById("payBtn").addEventListener("click",async()=>{
+  if(!cart.length)return alert("Keranjang masih kosong.");
 
-if(!cart.length)return alert("Keranjang masih kosong.");
-if(payment<total)return alert("Uang pembayaran belum cukup.");
+  const total=cart.reduce((sum,p)=>sum+p.price*p.qty,0);
+  const payment=Number(paymentEl.value)||0;
 
-alert("Pembayaran simulasi berhasil!");
-cart=[];
-paymentEl.value="";
-showCart();
+  if(payment<total)return alert("Uang pembayaran belum cukup.");
+
+  try{
+    const response=await fetch("/api/order",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({cart})
+    });
+
+    const data=await response.json();
+
+    if(!response.ok||!data.snap_token)
+      throw new Error(data.message||"Gagal mendapatkan Snap Token");
+
+    window.snap.pay(data.snap_token,{
+      onSuccess:function(result){
+        alert("Pembayaran berhasil!");
+        console.log(result);
+        cart=[];
+        paymentEl.value="";
+        showCart();
+      },
+      onPending:function(result){
+        alert("Pembayaran sedang menunggu.");
+        console.log(result);
+      },
+      onError:function(result){
+        alert("Pembayaran gagal.");
+        console.log(result);
+      },
+      onClose:function(){
+        console.log("Popup pembayaran ditutup.");
+      }
+    });
+
+  }catch(error){
+    console.error(error);
+    alert("Gagal menghubungkan ke Midtrans.");
+  }
 });
 
 async function testBackend(){
